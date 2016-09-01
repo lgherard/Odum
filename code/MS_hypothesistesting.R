@@ -18,6 +18,7 @@ library(reshape2)
 # Are any hypotheses addressed? #
 #################################
 
+# This function calculates the mean of all values greater that zero
 meanfun <- function(x) {
   meanprop <- mean(x > 0)
   return(meanprop)
@@ -41,9 +42,9 @@ sum(b2) # numbers of papers that tested a hypothesis
 
 # write.csv(odum, "odum_practice.csv")
 
-#################################################
-# Which predictions are mentioned, tested. etc? #
-#################################################
+############################################################
+# Which predictions are mentioned, testedor stated as fact #
+############################################################
 library(reshape2)
 pred <- odum[,6:29]
 
@@ -146,7 +147,7 @@ ggsave("figures/Pred_test_total.jpeg", width = 6.5, height = 3.09, units = "in")
 # Create subsetted dataset of papers that tested a hypothesis
 odum.tested <- odum[b2==1,]
 
-# Create a list of for every paper, if it tested a hypothesis, 
+# Create a list of every paper, if it tested a hypothesis, 
 # what is the outcome?
 
 find3 <- function(data) {
@@ -164,13 +165,13 @@ sum(dd) # total number of times hypotheses were tested (each paper can test more
 out <- aggregate(unlist(d), by = list(names(unlist(d)), unlist(d)), FUN = length)
 sum(out$x)
 
-cristina <- function(vec, n){
+vecpick <- function(vec, n){
   pick <- vec[n]
   return(pick)
 }
 
 out.wide <- dcast(out, Group.1 ~ Group.2, value.var = "x")
-out.wide$pred <- lapply(strsplit(out.wide$Group.1, split = "[.]"), cristina, n =2)
+out.wide$pred <- lapply(strsplit(out.wide$Group.1, split = "[.]"), vecpick, n =2)
 out.wide$pred <- as.numeric(out.wide$pred)
 head(out.wide)
 str(out.wide)
@@ -197,14 +198,17 @@ out.wide$R.perc <- 100*out.wide$R.all/out.wide$test
 out.wide$U.perc <- 100*out.wide$U/out.wide$test
 
 # Is overall Support, Ambiguity, or Uncertainty related to frequency tested?
+# Regression analyses for supported hypotheses as a function of number of times tested
 model.S_test <- lm(S.perc ~ test, data=out.wide)
 summary(model.S_test)
 hist(model.S_test$res)
 plot(model.S_test)
+# Regression analyses for rejected hypotheses as a function of number of times tested
 model.R_test <- lm(R.perc ~ test, data=out.wide)
 summary(model.R_test)
 hist(model.R_test$res)
 plot(model.R_test)
+# Regression analyses for uncertain support hypotheses as a function of number of times tested
 model.U_test <- lm(U.perc ~ test, data=out.wide)
 summary(model.U_test)
 hist(model.U_test$res)
