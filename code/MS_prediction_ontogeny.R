@@ -27,6 +27,7 @@ ontogeny <- function(hyp){
   melt <- melt(stat[,c(1,5:8)], id.var=c("PY_5", "n"))
   melt } #close function
 
+# Creat a figure for each prediction
 for (i in 1:24){
   data <- ontogeny(i)
   pred.no <- paste("Prediction", i, sep = " ")
