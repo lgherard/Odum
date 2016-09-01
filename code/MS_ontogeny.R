@@ -1,5 +1,6 @@
 #######################
 # Ontogeny of support #
+# Number of papers supporting, rejecting or mentioning hypotheses over time #
 #######################
 
 source("code/dataprep.R")
@@ -24,7 +25,7 @@ ont.pubs <- function(hyp){
                  R = length(out[out == "R"]),
                  U = length(out[out == "U"]))
   cdata } #close function
-# Determine # of papers that S, R, or U prediction in 5 year interval
+# Determine # of papers that resulted in Support, Rrejection, or Uncertain outcome for predictions in 5 year intervals
 ont.pubs.all <- c(0,0,0,0)
 for (i in 1:24){
   a <- ont.pubs(i)
@@ -95,7 +96,7 @@ names(pred.yearly)[6:9] <- c("S.cum", "U.cum", "R.cum", "n_tot")
 # convert to long form
 yr.long <- melt(pred.yearly[,c(1,6:8)], id=1)
 
-# Fitting an exponential
+# Fitting an exponential 
 model <- lm(value ~ PY+variable, data=yr.long)
 summary(model)
 model.sup <- lm(value~PY, data=subset(yr.long, variable == "S.cum"))
