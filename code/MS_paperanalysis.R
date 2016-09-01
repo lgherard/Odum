@@ -8,8 +8,10 @@ source("code/dataprep.R")
 
 table(odum$Type.p)
 
-# As a paper could do multiple things, it was ranked: first, test; then, accept as fact;
-# then, mention; then, no mention.
+# As a paper could have multiple outcomes, they were ranked as: first, test;
+#                                                               then, accept as fact;
+#                                                               then, mention;
+#                                                               then, no mention.
 i=1247
 i=470
 paper.test <- matrix(ncol=7, nrow=nrow(odum))
