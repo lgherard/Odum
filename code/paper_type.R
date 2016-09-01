@@ -5,7 +5,7 @@
 # Source data import and cleaning file
 source("code/dataprep.R")
 
-# Load necessary programs
+# Load necessary packages
 library(plyr)
 library(ggplot2)
 
