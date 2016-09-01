@@ -22,7 +22,7 @@ ggplot(odum.c, aes(x=Year, y=cum.cites)) +
 # Fitting an exponential
 ex.model <- lm(log(Freq) ~ Year, data=odum.c)
 summary(ex.model)
-
+# Create non-linear figure
 odum.c$pred_y <- exp(predict(ex.model, list(Year=odum.c$Year)))
 ggplot(odum.c, aes(x=Year, y=Freq)) +
   geom_line(aes(x=Year, y=pred_y), color="grey", size=2) +
