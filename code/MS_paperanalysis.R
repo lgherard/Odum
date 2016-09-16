@@ -63,6 +63,6 @@ table(paper.test$Treatment,paper.test$Type)
 # papers mentioning predictions
 mentions <- c("Fact", "Mention", "Test")
 sum(paper.test$Treatment %in% mentions)
-sum(paper.test$Treatment %in% mentions)/1398
+sum(paper.test$Treatment %in% mentions)/1598
 
 table(paper.test$Treatment,paper.test$Type)
